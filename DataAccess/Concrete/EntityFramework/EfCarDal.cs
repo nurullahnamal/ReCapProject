@@ -3,6 +3,7 @@ using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
@@ -17,14 +18,23 @@ namespace DataAccess.Concrete.EntityFramework
     {
         public List<CarDetailDto> GetCarDetails()
         {
-            using (ReCapContext context=new ReCapContext())
+            using (ReCapContext context = new ReCapContext())
             {
                 var result = from c in context.Cars
-                             join b in context.Brands
-                             on c.BrandId equals b.BrandId
-                             select new CarDetailDto { CarId = c.CarId,ModelYear = c.ModelYear
-                             ,BrandName=b.BrandName,Description=c.Description,
-                                 DailyPrice=c.DailyPrice};
+                             join b in context.Brands on c.BrandId equals b.BrandId
+                             join co in context.Colors on c.ColorId equals co.ColorId
+                             join o in context.Orders on c.OrderID equals o.OrderID
+                             select new CarDetailDto
+                             {
+                                 CarId = c.CarId,
+                                 ModelYear = c.ModelYear,
+                                 BrandName = b.BrandName,
+                                 Description = c.Description,
+                                 DailyPrice = c.DailyPrice,
+                                 ColorName=co.ColorName,
+                                 OrderDate=o.OrderDate
+                                 
+                             };
                 return result.ToList();
 
             }
