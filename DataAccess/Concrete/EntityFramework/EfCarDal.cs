@@ -32,7 +32,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  Description = car.Description,
                                  DailyPrice = car.DailyPrice,
                                  ColorName=co.ColorName,
-                                 
+                                 CompanyName = o.CompanyName
                                  
                              };
                 return result.ToList();
