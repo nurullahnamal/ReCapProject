@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfCarDal : EfEntityRepository<Car, ReCapContext>, ICarDal
+    public class EfCarDal : EfEntityRepositoryBase<Car, ReCapContext>, ICarDal
     {
         public List<CarDetailDto> GetCarDetails()
         {
@@ -23,7 +23,7 @@ namespace DataAccess.Concrete.EntityFramework
                 var result = from c in context.Cars
                              join b in context.Brands on c.BrandId equals b.BrandId
                              join co in context.Colors on c.ColorId equals co.ColorId
-                             join o in context.Orders on c.OrderID equals o.OrderID
+                             join o in context.Customers on c.OrderID equals o.OrderID
                              select new CarDetailDto
                              {
                                  CarId = c.CarId,
@@ -32,7 +32,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  Description = c.Description,
                                  DailyPrice = c.DailyPrice,
                                  ColorName=co.ColorName,
-                                 OrderDate=o.OrderDate
+
                                  
                              };
                 return result.ToList();
