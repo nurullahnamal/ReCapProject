@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.Constants;
 using Core.Utilities.Result;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -21,13 +22,23 @@ namespace Business.Concrete
 
         public IResult Add(Car car)
         {
+            if (car.Description.Length<5)
+            {
+                return new ErrorResult(Messages.CarNameInValid);
+            }
            _CarDal.Add(car);
-            return new Result();
+
+            return new SuccessResult(Messages.CarAdded);
         }
 
-        public List<Car> GetAll()
+        public IDataResult<List<Car>> GetAll()
         {
-            return  _CarDal.GetAll();
+            //iş kodları
+            if (DateTime.Now.Hour==17)
+            {
+                return new ErrorDataResult();
+            }
+            return new SuccessDataResult<List<Car>>(_CarDal.GetAll(),true,"Araçlar Listelendi");
         }
 
         public List<Car> GetAllById(int id)
