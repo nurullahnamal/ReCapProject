@@ -20,19 +20,20 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (ReCapContext context = new ReCapContext())
             {
-                var result = from car in context.Cars
-                             join b in context.Brands on car.BrandId equals b.BrandId
-                             join co in context.Colors on car.ColorId equals co.ColorId
-                             join o in context.Customers on car.UserId equals o.UserId
-                             select new CarDetailDto
+                var result = from c in context.Cars
+                             join b in context.Brands
+                             on c.BrandId equals b.BrandId
+                             join co in context.Colors
+                             on c.ColorId equals co.ColorId
+                             join u in context.Users
+                             on c.UserId equals u.UserId
+                             select new CarDetailDto()
                              {
-                                 CarId = car.CarId,
-                                 ModelYear = car.ModelYear,
+                                 CarId = c.CarId,
                                  BrandName = b.BrandName,
-                                 Description = car.Description,
-                                 DailyPrice = car.DailyPrice,
-                                 ColorName=co.ColorName,
-                                 CompanyName = o.CompanyName
+                                 ColorName = co.ColorName,
+                                 DailyPrice = c.DailyPrice,
+                                 FirsName=u.FirstName
                                  
                              };
                 return result.ToList();
