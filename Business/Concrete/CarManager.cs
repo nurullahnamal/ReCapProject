@@ -36,24 +36,24 @@ namespace Business.Concrete
             //iş kodları
             if (DateTime.Now.Hour==17)
             {
-                return new ErrorDataResult();
+                return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
             }
-            return new SuccessDataResult<List<Car>>(_CarDal.GetAll(),true,"Araçlar Listelendi");
+            return new SuccessDataResult<List<Car>>(_CarDal.GetAll(),Messages.CarsListed);
         }
 
-        public List<Car> GetAllById(int id)
+        public IDataResult <List<Car>> GetAllById(int id)
         {
-            return _CarDal.GetAll(c => c.CarId == id);
+            return new SuccessDataResult<List<Car>>( _CarDal.GetAll(c => c.CarId == id));
         }
 
-        public Car GetById(int carId)
+        public IDataResult< Car> GetById(int carId)
         {
-            return _CarDal.Get(c => c.CarId == carId);
+            return new SuccessDataResult<Car> (_CarDal.Get(c => c.CarId == carId));
         }
 
-        public List<CarDetailDto> GetCarDetails()
+        public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
-            return _CarDal.GetCarDetails();
+            return new SuccessDataResult<List<CarDetailDto>>( _CarDal.GetCarDetails());
         }
     }
 }
