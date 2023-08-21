@@ -22,11 +22,11 @@ namespace Business.Concrete
 
         public IResult Add(Car car)
         {
-            if (car.Description.Length<5)
+            if (car.Description.Length < 5)
             {
                 return new ErrorResult(Messages.CarNameInValid);
             }
-           _CarDal.Add(car);
+            _CarDal.Add(car);
 
             return new SuccessResult(Messages.CarAdded);
         }
@@ -34,30 +34,30 @@ namespace Business.Concrete
         public IDataResult<List<Car>> GetAll()
         {
             //iş kodları
-            if (DateTime.Now.Hour==17)
+            if (DateTime.Now.Hour == 17)
             {
                 return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
             }
-            return new SuccessDataResult<List<Car>>(_CarDal.GetAll(),Messages.CarsListed);
+            return new SuccessDataResult<List<Car>>(_CarDal.GetAll(), Messages.CarsListed);
         }
 
-        public IDataResult <List<Car>> GetAllById(int id)
+        public IDataResult<List<Car>> GetAllById(int id)
         {
-            return new SuccessDataResult<List<Car>>( _CarDal.GetAll(c => c.CarId == id));
+            return new SuccessDataResult<List<Car>>(_CarDal.GetAll(c => c.CarId == id));
         }
 
-        public IDataResult< Car> GetById(int carId)
+        public IDataResult<Car> GetById(int carId)
         {
-            return new SuccessDataResult<Car> (_CarDal.Get(c => c.CarId == carId));
+            return new SuccessDataResult<Car>(_CarDal.Get(c => c.CarId == carId));
         }
 
         public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
-            if (DateTime.Now.Hour==23)
+            if (DateTime.Now.Hour == 23)
             {
                 return new ErrorDataResult<List<CarDetailDto>>(Messages.MaintenanceTime);
             }
-            return new SuccessDataResult<List<CarDetailDto>>( _CarDal.GetCarDetails());
+            return new SuccessDataResult<List<CarDetailDto>>(_CarDal.GetCarDetails());
         }
     }
 }

@@ -12,7 +12,7 @@ namespace DataAccess.Concrete.EntityFramework
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"server=DESKTOP-9JCHGP7\SQLEXPRESS;database=ReCapProject;integrated security=true;");
+            optionsBuilder.UseSqlServer(@"server=DESKTOP-CHMVP03\SQLEXPRESS;database=ReCapProject;integrated security=true;");
         }
         public DbSet<Car>Cars { get; set; }
         public DbSet<Brand>Brands{ get; set; }

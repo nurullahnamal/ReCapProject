@@ -1,4 +1,5 @@
-﻿using Business.Concrete;
+﻿using Business.Abstract;
+using Business.Concrete;
 using DataAccess.Concrete.EntityFramework;
 
 namespace ConsoleUI
@@ -7,19 +8,27 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            CarManager carManager =new CarManager(new EfCarDal());
-            var result=carManager.GetCarDetails();
-            if(result.Success==true)
+            //CarManager carManager =new CarManager(new EfCarDal());
+            //var result=carManager.GetCarDetails();
+            //if(result.Success==true)
+            //{
+            //    foreach (var cars in result.Data)
+            //    {
+            //        Console.WriteLine(cars.ModelYear+"//"+cars.Description);
+            //    }
+            //}
+            //else
+            //{
+            //    Console.WriteLine(result.Message);
+            //}
+            IUserService user = new UserManager(new EfUserDal());
+            foreach (var VARIABLE in user.GetAll())
             {
-                foreach (var cars in result.Data)
-                {
-                    Console.WriteLine(cars.ModelYear+"//"+cars.Description);
-                }
+                Console.WriteLine(VARIABLE.FirstName);
             }
-            else
-            {
-                Console.WriteLine(result.Message);
-            }
+
+
+
         }
     }
 }
