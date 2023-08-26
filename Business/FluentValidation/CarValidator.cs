@@ -12,7 +12,16 @@ namespace Business.FluentValidation
     {
         public CarValidator()
         {
+            RuleFor(c => c.DailyPrice).NotEmpty();
             RuleFor(c => c.DailyPrice).GreaterThan(0);
+            RuleFor(c => c.DailyPrice).GreaterThanOrEqualTo(10).When(p=>p.ColorId==1).WithMessage("A ile Başlamalı");
+
+            RuleFor(c => c.Description).Must(StartWithA);
+        }
+
+        private bool StartWithA(string arg)
+        {
+            return arg.StartsWith("A");
         }
     }
 }

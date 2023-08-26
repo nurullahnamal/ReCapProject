@@ -6,9 +6,14 @@ using Entities.Concrete;
 using Entities.DTOs;
 using System;
 using System.Collections.Generic;
+
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Business.FluentValidation;
+using Core.Aspects.Autofac.Validation;
+using Core.CrossCuttingConcerns.Validation;
+using FluentValidation;
 
 namespace Business.Concrete
 {
@@ -20,16 +25,19 @@ namespace Business.Concrete
             _CarDal = carDal;
         }
 
+
+        [ValidationAspect (typeof(CarValidator))]
         public IResult Add(Car car)
         {
-            if (car.Description.Length < 5)
-            {
-                return new ErrorResult(Messages.CarNameInValid);
-            }
-            _CarDal.Add(car);
+            //business Codes - İş ihtiyaçları 
 
+            ValidationTool.Validate(new CarValidator(), car);
+
+            _CarDal.Add(car);
             return new SuccessResult(Messages.CarAdded);
         }
+
+      
 
         public IDataResult<List<Car>> GetAll()
         {
@@ -59,5 +67,6 @@ namespace Business.Concrete
             }
             return new SuccessDataResult<List<CarDetailDto>>(_CarDal.GetCarDetails());
         }
+        
     }
 }
