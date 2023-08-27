@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Autofac.Extras.DynamicProxy;
 using Business.Abstract;
 using Business.Concrete;
+using Business.CSS;
 using Core.Utilities.Interceptors;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
@@ -38,7 +39,9 @@ namespace Business.DependencyResolvers.Autofac
             
             builder.RegisterType<UserManager>().As<IUserService>().SingleInstance();
             builder.RegisterType<EfUserDal>().As<IUserDal>().SingleInstance();
-
+           
+            
+            builder.RegisterType<FileLogger>().As<ILogger>().SingleInstance();
 
 
 

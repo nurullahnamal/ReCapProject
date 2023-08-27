@@ -10,38 +10,46 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Business.CSS;
 using Business.FluentValidation;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
 using FluentValidation;
+using System.Runtime.ConstrainedExecution;
+using Core.Utilities.Business;
 
 namespace Business.Concrete
 {
     public class CarManager : ICarService
     {
         ICarDal _CarDal;
-        public CarManager(ICarDal carDal)
+        IBrandService _brandService;
+
+        public CarManager(ICarDal carDal, IBrandService brandService)
         {
             _CarDal = carDal;
+            _brandService = brandService;
+            
         }
 
 
-        [ValidationAspect (typeof(CarValidator))]
+        [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
-        {
-            //business Codes - İş ihtiyaçları 
+        {  
+           IResult result= BusinessRules.Run(CheckIfBrandCountofBrandCorrect(car.BrandId),
+                CheckIfBrandDescriptionExists(car.Description), CheckIfBrandLimitExceded());
 
-            ValidationTool.Validate(new CarValidator(), car);
-
+            if (result!=null)
+            {
+                return result;
+            }
             _CarDal.Add(car);
             return new SuccessResult(Messages.CarAdded);
+           
         }
-
-      
 
         public IDataResult<List<Car>> GetAll()
         {
-            //iş kodları
             if (DateTime.Now.Hour == 17)
             {
                 return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
@@ -67,6 +75,52 @@ namespace Business.Concrete
             }
             return new SuccessDataResult<List<CarDetailDto>>(_CarDal.GetCarDetails());
         }
-        
+
+
+        [ValidationAspect(typeof(CarValidator))]
+        public IResult Update(Car car)
+        {
+            var result = _CarDal.GetAll(c => c.BrandId == car.BrandId).Count;
+            if (result > 15)
+            {
+                return new ErrorResult(Messages.CarNameInValid);
+            }
+
+            throw new NotImplementedException();
+        }
+
+
+        private IResult CheckIfBrandCountofBrandCorrect(int BrandId)
+        {
+            var result = _CarDal.GetAll(c => c.BrandId == BrandId).Count;
+            if (result > 15)
+            {
+                return new ErrorResult(Messages.CarCountOfBrandError);
+            }
+
+            return new SuccessResult();
+        }
+
+        private IResult CheckIfBrandDescriptionExists(string description)
+        {
+            var result = _CarDal.GetAll(c => c.Description == description).Any();
+            if (result)
+            {
+                return new ErrorResult(Messages.CarDescriptionAlReadyExists);
+            }
+
+            return new SuccessResult();
+        }
+
+        private IResult CheckIfBrandLimitExceded()
+        {
+            var result = _brandService.GetAll();
+            if (result.Data.Count>15)
+            {
+                return new ErrorResult(Messages.BrandLimitExceded);
+            }
+
+            return new SuccessResult();
+        }
     }
 }

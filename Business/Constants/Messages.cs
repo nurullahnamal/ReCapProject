@@ -17,5 +17,9 @@ namespace Business.Constants
         public static string BrandAdd="Araç Eklendi";
 
         public static string CarsListed = "Araç Listelendi";
+        public static string CarCountOfBrandError = "sınır Aşıldı";
+        public static string CarDescriptionAlReadyExists = " bu açıklama kullanılıyor ";
+
+        public static string BrandLimitExceded = "sınır aşıldı yenisi eklenemiyor";
     }
 }

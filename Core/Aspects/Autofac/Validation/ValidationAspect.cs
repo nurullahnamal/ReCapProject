@@ -15,9 +15,10 @@ namespace Core.Aspects.Autofac.Validation
         private Type _validatorType;
         public ValidationAspect(Type validatorType)
         {
+            //defensice coding
             if (!typeof(IValidator).IsAssignableFrom(validatorType))
             {
-                throw new System.Exception("Bu bir Dogrulama Sınıfı");
+                throw new System.Exception("Bu bir Dogrulama Sınıfı değil");
             }
 
             _validatorType = validatorType;
