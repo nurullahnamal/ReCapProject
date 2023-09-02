@@ -21,5 +21,7 @@ namespace Business.Constants
         public static string CarDescriptionAlReadyExists = " bu açıklama kullanılıyor ";
 
         public static string BrandLimitExceded = "sınır aşıldı yenisi eklenemiyor";
+
+        public static string? AuthorizationDenied = "AuthorizationDenied";
     }
 }
