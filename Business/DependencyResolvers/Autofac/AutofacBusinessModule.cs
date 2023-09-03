@@ -10,8 +10,11 @@ using Business.Abstract;
 using Business.Concrete;
 using Business.CSS;
 using Core.Utilities.Interceptors;
+using Core.Utilities.Security.Jwt;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
+using Core.Utilities.Security.JWT;
+using Microsoft.AspNetCore.Http;
 
 namespace Business.DependencyResolvers.Autofac
 {
@@ -37,14 +40,19 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<RentalManager>().As<IRentalService>().SingleInstance();
             builder.RegisterType<EfRentalDal>().As<IRentalDal>().SingleInstance();  
             
-            builder.RegisterType<UserManager>().As<IUserService>().SingleInstance();
-            builder.RegisterType<EfUserDal>().As<IUserDal>().SingleInstance();
-           
-            
             builder.RegisterType<FileLogger>().As<ILogger>().SingleInstance();
 
 
+            builder.RegisterType<UserManager>().As<IUserService>();
+            builder.RegisterType<EfUserDal>().As<IUserDal>();
 
+            builder.RegisterType<AuthManager>().As<IAuthService>();
+            builder.RegisterType<JwtHelper>().As<ITokenHelper>();
+
+
+            builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>();
+
+        
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 

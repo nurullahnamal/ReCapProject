@@ -1,20 +1,19 @@
-﻿using Core.Utilities.Security.Encryption;
-using Entities.Concrete;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 using Core.Extensions;
+using Core.Utilities.Security.Encryption;
 
-namespace Core.Utilities.Security.JWT
+using Core.Utilities.Security.JWT;
+using Entities.Concrete;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+
+namespace Core.Utilities.Security.Jwt
 {
-
     public class JwtHelper : ITokenHelper
     {
         public IConfiguration Configuration { get; }
@@ -68,5 +67,4 @@ namespace Core.Utilities.Security.JWT
             return claims;
         }
     }
-
 }

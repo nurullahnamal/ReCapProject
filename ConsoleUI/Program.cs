@@ -21,11 +21,11 @@ namespace ConsoleUI
             //{
             //    Console.WriteLine(result.Message);
             //}
-            IUserService user = new UserManager(new EfUserDal());
-            foreach (var VARIABLE in user.GetAll())
-            {
-                Console.WriteLine(VARIABLE.FirstName);
-            }
+            //IUserService user = new UserManager(new EfUserDal());
+            //foreach (var VARIABLE in user.GetAll())
+            //{
+            //    Console.WriteLine(VARIABLE.FirstName);
+            //}
 
 
 

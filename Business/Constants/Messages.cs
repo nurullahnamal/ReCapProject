@@ -22,6 +22,18 @@ namespace Business.Constants
 
         public static string BrandLimitExceded = "sınır aşıldı yenisi eklenemiyor";
 
-        public static string? AuthorizationDenied = "AuthorizationDenied";
+        public static string? AuthorizationDenied = "Yetkin Yok";
+
+        public static string UserRegistered = "Kayıt Olundu";
+
+        public static string UserNotFound = "kullanıcı bulunamadı";
+
+        public static string PasswordError = "parola hatası";
+
+        public static string SuccessfulLogin = "giriş başarılı";
+
+        public static string UserAlreadyExists = "kullacı zaten var";
+
+        public static string AccessTokenCreated = "Giriş Tokeni oluşturuldu";
     }
 }

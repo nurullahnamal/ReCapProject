@@ -16,6 +16,7 @@ using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
 using FluentValidation;
 using System.Runtime.ConstrainedExecution;
+using Business.BusinessAspects.Autofac;
 using Core.Utilities.Business;
 
 namespace Business.Concrete
@@ -32,7 +33,7 @@ namespace Business.Concrete
             
         }
 
-
+        [SecuredOperation("car.add")]
         [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {  
